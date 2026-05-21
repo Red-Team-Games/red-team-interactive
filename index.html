@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RED TEAM INTERACTIVE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Falling code canvas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- CRT scanline overlay -->
+  <div id="scanlines"></div>
+
+  <!-- ═══════════════════════════ BOOT SCREEN ═══════════════════════════ -->
+  <div id="boot-screen" class="screen active">
+    <div id="boot-output"></div>
+    <span class="cursor blink" id="boot-cursor">_</span>
+  </div>
+
+  <!-- ═══════════════════════════ HOME SCREEN ═══════════════════════════ -->
+  <div id="home-screen" class="screen">
+    <header class="term-header">
+      <div class="header-left">
+        <span class="red">&gt;</span>
+        <span class="header-path"><span class="bc-link" onclick="toHome()">ROOT</span><span class="bc-sep">&nbsp;/&nbsp;</span>RED&nbsp;TEAM&nbsp;INTERACTIVE</span>
+        <span class="cursor blink red">_</span>
+      </div>
+      <div class="header-right">
+        <span class="dim">SYSTEMS&nbsp;ONLINE</span>
+        <span class="status-dot"></span>
+        <button class="contact-btn" id="contact-btn-home">[ CONTACT ]</button>
+      </div>
+    </header>
+
+    <main class="home-main">
+      <div class="home-top">
+        <div class="studio-name">RED TEAM INTERACTIVE</div>
+        <div class="studio-sub">// GAME LIBRARY ACCESS TERMINAL //</div>
+      </div>
+
+      <div class="rul">&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;</div>
+
+      <div class="games-grid">
+
+        <button class="game-tile" data-game="sail">
+          <div class="tile-corner tl"></div>
+          <div class="tile-corner tr"></div>
+          <div class="tile-corner bl"></div>
+          <div class="tile-corner br"></div>
+          <div class="tile-top-bar">
+            <span class="dim">FILE://</span>
+            <span class="tile-tag">GAME_01</span>
+          </div>
+          <div class="tile-img-wrap">
+            <img src="assets/sail/cover.jpg" alt="Sail" class="tile-img"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="tile-img-ph">
+              <img src="assets/sail/Sail_Logo_Sail_Underline_W.png" class="tile-logo-img" alt="Sail logo"
+                onload="pixelateImage(this,8)" onerror="this.style.display='none'">
+            </div>
+          </div>
+          <div class="tile-name">SAIL</div>
+          <div class="tile-status"><span class="status-dot-sm"></span>&nbsp;ONLINE</div>
+        </button>
+
+        <button class="game-tile" data-game="hard-drive">
+          <div class="tile-corner tl"></div>
+          <div class="tile-corner tr"></div>
+          <div class="tile-corner bl"></div>
+          <div class="tile-corner br"></div>
+          <div class="tile-top-bar">
+            <span class="dim">FILE://</span>
+            <span class="tile-tag">GAME_02</span>
+          </div>
+          <div class="tile-img-wrap">
+            <img src="assets/hard-drive/cover.jpg" alt="Hard Drive" class="tile-img"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="tile-img-ph">
+              <img src="assets/hard-drive/HardDrive_Logo_NoWords_White.png" class="tile-logo-img" alt="Hard Drive logo"
+                onload="pixelateImage(this,8)" onerror="this.style.display='none'">
+            </div>
+          </div>
+          <div class="tile-name">HARD_DRIVE</div>
+          <div class="tile-status"><span class="status-dot-sm"></span>&nbsp;ONLINE</div>
+        </button>
+
+        <button class="game-tile" data-game="monsters-and-mazes">
+          <div class="tile-corner tl"></div>
+          <div class="tile-corner tr"></div>
+          <div class="tile-corner bl"></div>
+          <div class="tile-corner br"></div>
+          <div class="tile-top-bar">
+            <span class="dim">FILE://</span>
+            <span class="tile-tag">GAME_03</span>
+          </div>
+          <div class="tile-img-wrap">
+            <img src="assets/monsters-and-mazes/cover.jpg" alt="Monsters and Mazes" class="tile-img"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="tile-img-ph">
+              <img src="assets/monsters-and-mazes/logo transparent.png" class="tile-logo-img" alt="Monsters and Mazes logo"
+                onload="pixelateImage(this,8)" onerror="this.style.display='none'">
+            </div>
+          </div>
+          <div class="tile-name">MONSTERS<br>&amp;&nbsp;MAZES</div>
+          <div class="tile-status"><span class="status-dot-sm"></span>&nbsp;ONLINE</div>
+        </button>
+
+        <button class="game-tile" data-game="monke-mages">
+          <div class="tile-corner tl"></div>
+          <div class="tile-corner tr"></div>
+          <div class="tile-corner bl"></div>
+          <div class="tile-corner br"></div>
+          <div class="tile-top-bar">
+            <span class="dim">FILE://</span>
+            <span class="tile-tag">GAME_04</span>
+          </div>
+          <div class="tile-img-wrap">
+            <img src="assets/monke-mages/cover.jpg" alt="Monke Mages" class="tile-img"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="tile-img-ph">
+              <div class="ascii-wand" aria-label="Magic wand">
+                <div class="aw-top">&#10022;&nbsp;&nbsp;&#183;&nbsp;&nbsp;&#10022;</div>
+                <div class="aw-shaft">&#9553;</div>
+                <div class="aw-shaft">&#9553;</div>
+                <div class="aw-cross">&#9552;&#9552;&#9580;&#9552;&#9552;</div>
+                <div class="aw-shaft">&#9553;</div>
+                <div class="aw-base">&#9562;&#9552;&#9552;&#9552;&#9556;</div>
+              </div>
+            </div>
+          </div>
+          <div class="tile-name">MONKE_MAGES</div>
+          <div class="tile-status"><span class="status-dot-sm"></span>&nbsp;ONLINE</div>
+        </button>
+
+      </div>
+
+      <div class="rul">&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;</div>
+      <div class="home-prompt">&gt;&nbsp;SELECT&nbsp;A&nbsp;FILE&nbsp;TO&nbsp;ACCESS&nbsp;GAME&nbsp;DATA&nbsp;<span class="cursor blink red">_</span></div>
+    </main>
+  </div>
+
+  <!-- ═══════════════════════════ GAME SCREEN ═══════════════════════════ -->
+  <div id="game-screen" class="screen">
+    <header class="term-header">
+      <div class="header-left">
+        <span class="red">&gt;</span>
+        <span class="header-path" id="game-breadcrumb">ROOT&nbsp;/&nbsp;GAMES&nbsp;/&nbsp;...</span>
+        <span class="cursor blink red">_</span>
+      </div>
+      <div class="header-right">
+        <button class="contact-btn" id="contact-btn-game">[ CONTACT ]</button>
+        <button class="back-btn" id="back-btn">&#9664;&nbsp;BACK</button>
+      </div>
+    </header>
+
+    <div class="game-layout" id="game-layout">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════ PRIVACY SCREEN ══════════════════════════ -->
+  <div id="privacy-screen" class="screen">
+    <header class="term-header">
+      <div class="header-left">
+        <span class="red">&gt;</span>
+        <span class="header-path" id="privacy-breadcrumb">ROOT&nbsp;/&nbsp;GAMES&nbsp;/&nbsp;...&nbsp;/&nbsp;PRIVACY</span>
+        <span class="cursor blink red">_</span>
+      </div>
+      <div class="header-right">
+        <button class="contact-btn" id="contact-btn-privacy">[ CONTACT ]</button>
+        <button class="back-btn" id="privacy-back-btn">&#9664;&nbsp;BACK</button>
+      </div>
+    </header>
+    <div class="privacy-body" id="privacy-body">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════ CONTACT MODAL ═══════════════════════════ -->
+  <div id="contact-modal" class="modal-backdrop" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-label="Contact">
+      <div class="modal-titlebar">
+        <span class="red">&gt;</span>
+        <span class="modal-title">OPEN_CHANNEL.exe</span>
+        <button class="modal-close" id="modal-close" aria-label="Close">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section-label">// SUPPORT &amp; INQUIRIES</div>
+        <p class="modal-text">For support, business inquiries, or press&nbsp;contact — reach out directly:</p>
+        <div class="modal-email-row">
+          <span class="modal-email-addr">support@redteam.games</span>
+          <button class="modal-copy-btn" id="modal-copy-btn" data-email="support@redteam.games">[ COPY ]</button>
+        </div>
+        <div class="modal-copy-confirm" id="modal-copy-confirm">// COPIED TO CLIPBOARD</div>
+        <a class="modal-mailto-btn" href="mailto:support@redteam.games">
+          &#9658;&nbsp;OPEN&nbsp;EMAIL&nbsp;CLIENT
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Flash / transition overlay -->
+  <div id="flash"></div>
+
+  <script src="js/bg.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
