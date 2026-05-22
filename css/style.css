@@ -862,3 +862,52 @@ html, body {
   100% { transform: translate(0); filter: brightness(1); }
 }
 .glitching { animation: glitch 0.35s steps(1) forwards; }
+
+/* ─────────────────────────────────────────────
+   MOBILE — header & contact modal fixes
+───────────────────────────────────────────── */
+@media (max-width: 540px) {
+  /* Hide the "SYSTEMS ONLINE" label + dot so the header doesn't overflow */
+  .header-right .dim,
+  .header-right .status-dot { display: none; }
+
+  /* Shrink the contact button slightly */
+  .contact-btn {
+    padding: 4px 8px;
+    letter-spacing: 1px;
+    font-size: 10px;
+  }
+
+  /* Shrink the back button to match */
+  .back-btn {
+    padding: 4px 8px;
+    letter-spacing: 1px;
+    font-size: 10px;
+  }
+
+  /* Stack email address + copy button vertically in the modal */
+  .modal-email-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  /* Shrink the big email address so it fits */
+  .modal-email-addr {
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  /* Make copy button full-width when stacked */
+  .modal-copy-btn {
+    width: 100%;
+    padding: 8px;
+    text-align: center;
+  }
+
+  /* Make mailto button full-width too */
+  .modal-mailto-btn {
+    align-self: stretch;
+    justify-content: center;
+  }
+}
