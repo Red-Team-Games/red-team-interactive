@@ -69,6 +69,18 @@ html, body {
   justify-content: center;
   padding: 12vh 10vw;
 }
+#boot-skip {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--dim);
+  letter-spacing: 0.15em;
+  animation: blink 1.4s step-end infinite;
+  pointer-events: none;
+}
 #boot-output {
   font-family: var(--font-mono);
   font-size: clamp(12px, 1.4vw, 15px);

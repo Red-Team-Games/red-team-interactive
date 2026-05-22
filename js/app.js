@@ -278,16 +278,13 @@ function pixelateImage(img, blockSize) {
 //  BOOT SEQUENCE
 // ─────────────────────────────────────────────────────────────
 const BOOT_LINES = [
-  '> RED TEAM INTERACTIVE — SYSTEM INIT',
-  '> CHECKING CORE SYSTEMS..........[ OK ]',
-  '> LOADING GAME DATABASE..........[ OK ]',
-  '> MOUNTING ASSET ARCHIVE.........[ OK ]',
-  '> ESTABLISHING UPLINK............[ OK ]',
-  '> DECRYPTING GAME MANIFESTS......[ OK ]',
+  '> SYSTEM INIT..........[ OK ]',
+  '> CORE SYSTEMS.........[ OK ]',
+  '> GAME DATABASE........[ OK ]',
+  '> UPLINK...............[ OK ]',
   '',
   '> ALL SYSTEMS NOMINAL.',
   '> WELCOME, OPERATOR.',
-  '> ACCESSING GAME LIBRARY...',
   '',
 ];
 

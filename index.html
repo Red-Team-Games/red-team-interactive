@@ -8,6 +8,23 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <script>
+    function pixelateImage(img, blockSize) {
+      const w = img.naturalWidth;
+      const h = img.naturalHeight;
+      if (!w || !h) return;
+      const canvas = document.createElement('canvas');
+      canvas.width  = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.imageSmoothingEnabled = false;
+      const sw = Math.max(1, Math.round(w / blockSize));
+      const sh = Math.max(1, Math.round(h / blockSize));
+      ctx.drawImage(img, 0, 0, sw, sh);
+      ctx.drawImage(canvas, 0, 0, sw, sh, 0, 0, w, h);
+      img.src = canvas.toDataURL('image/png');
+    }
+  </script>
 </head>
 <body>
 
@@ -21,6 +38,7 @@
   <div id="boot-screen" class="screen active">
     <div id="boot-output"></div>
     <span class="cursor blink" id="boot-cursor">_</span>
+    <div id="boot-skip">[ TAP TO SKIP ]</div>
   </div>
 
   <!-- ═══════════════════════════ HOME SCREEN ═══════════════════════════ -->
@@ -83,6 +101,7 @@
               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
             <div class="tile-img-ph">
               <img src="assets/hard-drive/HardDrive_Logo_NoWords_White.png" class="tile-logo-img" alt="Hard Drive logo"
+                style="filter: brightness(0) invert(1); opacity: 0.92;"
                 onload="pixelateImage(this,8)" onerror="this.style.display='none'">
             </div>
           </div>
