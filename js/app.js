@@ -291,7 +291,7 @@ const BOOT_LINES = [
 function runBoot() {
   showScreen('boot-screen');
   const out = document.getElementById('boot-output');
-  let text = '', li = 0, ci = 0, done = false;
+  let text = '', li = 0, done = false;
 
   function finish() {
     if (done) return;
@@ -312,16 +312,10 @@ function runBoot() {
   function step() {
     if (done) return;
     if (li >= BOOT_LINES.length) { setTimeout(finish, 200); return; }
-    const line = BOOT_LINES[li];
-    if (ci < line.length) {
-      text += line[ci++];
-      out.textContent = text;
-      setTimeout(step, Math.random() * 8 + 4);
-    } else {
-      text += '\n'; out.textContent = text;
-      li++; ci = 0;
-      setTimeout(step, line.length === 0 ? 50 : 30);
-    }
+    text += BOOT_LINES[li] + '\n';
+    out.textContent = text;
+    li++;
+    setTimeout(step, 120);
   }
   step();
 }
