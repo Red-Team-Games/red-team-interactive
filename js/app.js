@@ -8,15 +8,15 @@ const GAMES = {
 
   'hard-drive': {
     title:      'HARD DRIVE',
-    tagline:    '// HIGH-SPEED ACTION',
-    genre:      'Action / Racing',
-    platform:   'PC',
+    tagline:    '// ELECTRO COMBAT',
+    genre:      'Combat / Racing',
+    platform:   'PCVR & META QUEST',
     status:     'AVAILABLE NOW',
     storeLabel: 'PLAY NOW',
-    storeUrl:   '#',   // ← replace with actual store URL
+    storeUrl:   'https://www.meta.com/experiences/hard-drive/7497508576965455/',
     logo:       'assets/hard-drive/HardDrive_Logo_NoWords_White.png',
     screenshot: 'assets/hard-drive/cover.jpg',
-    description:'Burn through corrupted data highways at impossible speeds. Dodge system viruses, hack shortcuts through the grid, and cross the finish line before the clock wipes you from existence.',
+        description:'Hard Drive is a fast-paced, multiplayer, competitive electro combat driving game. Players control sleek, neon-lit motorcycle looking vehicles, known as bykes, which leave behind a temporary solid trail of light as they move. Players must outmaneuver their opponents by creating a trails of light that they cannot avoid crashing into, while avoiding the trails left by other players.',
     privacyPolicy: {
       title:   'HARD DRIVE — PRIVACY POLICY',
       meta:    'Red Team Interactive Inc.',
@@ -70,12 +70,12 @@ const GAMES = {
 
   'sail': {
     title:      'SAIL',
-    tagline:    '// NAUTICAL ADVENTURE',
+    tagline:    '// VR PIRATE ADVENTURE',
     genre:      'Strategy / Exploration',
-    platform:   'PC',
+    platform:   'PCVR & META QUEST',
     status:     'AVAILABLE NOW',
     storeLabel: 'PLAY NOW',
-    storeUrl:   '#',   // ← replace with actual store URL
+    storeUrl:   'https://www.meta.com/experiences/sail/4861702420530349/',
     logo:       'assets/sail/Sail_Logo_Sail_Underline_W.png',
     screenshot: 'assets/sail/cover.jpg',
     description:'Chart unknown waters, command your crew through storms and sea monsters, and discover what lies beyond the edge of every map. Every voyage is yours to write.',
@@ -146,15 +146,15 @@ const GAMES = {
   'monsters-and-mazes': {
     title:      'MONSTERS &amp; MAZES',
     titlePlain: 'MONSTERS & MAZES',
-    tagline:    '// DUNGEON CRAWLER',
-    genre:      'RPG / Dungeon Crawler',
-    platform:   'PC',
+    tagline:    '// MAZE HORROR',
+    genre:      'HORROR / Dungeon Crawler',
+    platform:   'META QUEST',
     status:     'AVAILABLE NOW',
     storeLabel: 'PLAY NOW',
-    storeUrl:   '#',   // ← replace with actual store URL
+    storeUrl:   'https://www.meta.com/experiences/monsters-and-mazes/9972710149415118/',
     logo:       'assets/monsters-and-mazes/logo transparent.png',
     screenshot: 'assets/monsters-and-mazes/cover.jpg',
-    description:'Descend into procedurally generated dungeons teeming with monsters, traps, and forgotten treasure. Every run is different. Every death is permanent. How deep can you go?',
+      description:'Monsters and Mazes is a Multiplayer PvP Horror game where one player is the monster and the rest need to Solve and Escape from a Maze before the Monster can get them...',
     privacyPolicy: {
       title:   'MONSTERS & MAZES — PRIVACY POLICY',
       meta:    'Red Team Games | Effective Date: June 16, 2025',
@@ -203,10 +203,10 @@ const GAMES = {
     platform:   'PC',
     status:     'AVAILABLE NOW',
     storeLabel: 'PLAY NOW',
-    storeUrl:   '#',   // ← replace with actual store URL
+    storeUrl:   'https://www.meta.com/experiences/monke-mages/25150234971255445/',
     logo:       null,  // ASCII art used instead — see tile HTML
     screenshot: 'assets/monke-mages/cover.jpg',
-    description:'Master arcane arts as a tribe of primate sorcerers. Chain devastating spell combos, outwit wave after wave of enemies, and ascend an ever-changing magical tower in this fast-paced roguelite.',
+      description:'Cast spells using your voice and become the ultimate monke mage!',
     privacyPolicy: {
       title:   'MONKE MAGES — PRIVACY POLICY',
       meta:    'Red Team Games | Effective Date: June 16, 2025',
@@ -294,19 +294,36 @@ const BOOT_LINES = [
 function runBoot() {
   showScreen('boot-screen');
   const out = document.getElementById('boot-output');
-  let text = '', li = 0, ci = 0;
+  let text = '', li = 0, ci = 0, done = false;
+
+  function finish() {
+    if (done) return;
+    done = true;
+    cleanup();
+    toHome();
+  }
+
+  function cleanup() {
+    document.removeEventListener('keydown', finish);
+    document.removeEventListener('click', finish);
+  }
+
+  // Skip on any key or click
+  document.addEventListener('keydown', finish);
+  document.addEventListener('click', finish);
 
   function step() {
-    if (li >= BOOT_LINES.length) { setTimeout(toHome, 350); return; }
+    if (done) return;
+    if (li >= BOOT_LINES.length) { setTimeout(finish, 200); return; }
     const line = BOOT_LINES[li];
     if (ci < line.length) {
       text += line[ci++];
       out.textContent = text;
-      setTimeout(step, Math.random() * 18 + 8);
+      setTimeout(step, Math.random() * 8 + 4);
     } else {
       text += '\n'; out.textContent = text;
       li++; ci = 0;
-      setTimeout(step, line.length === 0 ? 90 : 55);
+      setTimeout(step, line.length === 0 ? 50 : 30);
     }
   }
   step();
