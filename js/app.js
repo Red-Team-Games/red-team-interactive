@@ -49,7 +49,7 @@ const GAMES = {
         {
           h: '5. HOW TO CONTACT US',
           p: 'If you have any questions about this Privacy Policy or our data practices, please contact us at:',
-          contact: { email: 'support@redteam.games', address: '1377 East 1060 North, Orem, UT 84097' },
+          contact: { email: 'support@redteam.games'},
         },
         {
           h: '6. CHANGES TO THIS PRIVACY POLICY',
