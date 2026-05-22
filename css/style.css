@@ -871,11 +871,35 @@ html, body {
   .header-right .dim,
   .header-right .status-dot { display: none; }
 
+  /* Prevent header from overflowing */
+  .term-header { overflow: hidden; gap: 6px; }
+
+  /* Let breadcrumb shrink and clip if needed */
+  .header-left {
+    font-size: 10px;
+    letter-spacing: 1px;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .header-path {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Keep right side fixed width so contact button never gets pushed off */
+  .header-right {
+    flex-shrink: 0;
+    gap: 6px;
+  }
+
   /* Shrink the contact button slightly */
   .contact-btn {
     padding: 4px 8px;
     letter-spacing: 1px;
     font-size: 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   /* Shrink the back button to match */
@@ -883,6 +907,8 @@ html, body {
     padding: 4px 8px;
     letter-spacing: 1px;
     font-size: 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   /* Stack email address + copy button vertically in the modal */
@@ -896,6 +922,7 @@ html, body {
   .modal-email-addr {
     font-size: 14px;
     letter-spacing: 1px;
+    text-align: center;
   }
 
   /* Make copy button full-width when stacked */
