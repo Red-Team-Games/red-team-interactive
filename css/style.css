@@ -69,6 +69,14 @@ html, body {
   justify-content: center;
   padding: 12vh 10vw;
 }
+#boot-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
 #boot-skip {
   position: fixed;
   bottom: 2rem;
@@ -80,6 +88,7 @@ html, body {
   letter-spacing: 0.15em;
   animation: blink 1.4s step-end infinite;
   pointer-events: none;
+  z-index: 1;
 }
 #boot-output {
   font-family: var(--font-mono);
@@ -87,6 +96,8 @@ html, body {
   color: var(--red);
   line-height: 1.8;
   white-space: pre;
+  position: relative;
+  z-index: 1;
 }
 
 /* ─────────────────────────────────────────────

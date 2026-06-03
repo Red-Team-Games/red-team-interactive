@@ -256,6 +256,7 @@ const GAMES = {
 //  original pixel becomes a chunky blockSize×blockSize square.
 // ─────────────────────────────────────────────────────────────
 function pixelateImage(img, blockSize) {
+  if (img.src.startsWith('data:')) return;
   const w = img.naturalWidth;
   const h = img.naturalHeight;
   if (!w || !h) return;
@@ -290,7 +291,8 @@ const BOOT_LINES = [
 
 function runBoot() {
   showScreen('boot-screen');
-  const out = document.getElementById('boot-output');
+  const out   = document.getElementById('boot-output');
+  const video = document.getElementById('boot-video');
   let text = '', li = 0, done = false;
 
   function finish() {
@@ -303,15 +305,18 @@ function runBoot() {
   function cleanup() {
     document.removeEventListener('keydown', finish);
     document.removeEventListener('click', finish);
+    if (video) video.removeEventListener('ended', finish);
   }
 
-  // Skip on any key or click
+  // Transition when video finishes, or skip on tap/keypress
+  if (video) video.addEventListener('ended', finish);
   document.addEventListener('keydown', finish);
   document.addEventListener('click', finish);
 
+  // Boot text types out while video plays — stops waiting after last line
   function step() {
     if (done) return;
-    if (li >= BOOT_LINES.length) { setTimeout(finish, 200); return; }
+    if (li >= BOOT_LINES.length) return; // wait for video ended event
     text += BOOT_LINES[li] + '\n';
     out.textContent = text;
     li++;

@@ -4,12 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RED TEAM INTERACTIVE</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script>
     function pixelateImage(img, blockSize) {
+      if (img.src.startsWith('data:')) return;
       const w = img.naturalWidth;
       const h = img.naturalHeight;
       if (!w || !h) return;
@@ -36,6 +38,9 @@
 
   <!-- ═══════════════════════════ BOOT SCREEN ═══════════════════════════ -->
   <div id="boot-screen" class="screen active">
+    <video id="boot-video" autoplay muted playsinline>
+      <source src="assets/boot.mp4" type="video/mp4">
+    </video>
     <div id="boot-output"></div>
     <span class="cursor blink" id="boot-cursor">_</span>
     <div id="boot-skip">[ TAP TO SKIP ]</div>
