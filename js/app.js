@@ -290,6 +290,9 @@ const BOOT_LINES = [
 ];
 
 function runBoot() {
+  // Direct link — skip boot and route immediately
+  if (window.location.hash.slice(1)) { handleRoute(); return; }
+
   showScreen('boot-screen');
   const out   = document.getElementById('boot-output');
   const video = document.getElementById('boot-video');
@@ -364,6 +367,7 @@ function fadeFromBlack(cb) {
 }
 
 function toHome() {
+  setHash('');
   fadeToBlack(() => { showScreen('home-screen'); fadeFromBlack(); });
 }
 
@@ -444,6 +448,7 @@ function showLoader(gameTitle, cb) {
 function openGame(id) {
   const g = GAMES[id]; if (!g) return;
   currentGameId = id;
+  setHash(id);
   const tile = document.querySelector(`.game-tile[data-game="${id}"]`);
   if (tile) { tile.classList.add('glitching'); setTimeout(() => tile.classList.remove('glitching'), 400); }
   flash(() => {
@@ -507,6 +512,7 @@ function buildGameScreen(id, g) {
 // ─────────────────────────────────────────────────────────────
 function openPrivacy(id) {
   const g = GAMES[id]; if (!g || !g.privacyPolicy) return;
+  setHash(`${id}/privacy`);
   buildPrivacyScreen(id, g);
   fadeToBlack(() => { showScreen('privacy-screen'); fadeFromBlack(); });
 }
@@ -553,6 +559,7 @@ function buildPrivacyScreen(id, g) {
 
 function goBackToGame() {
   if (currentGameId) {
+    setHash(currentGameId);
     fadeToBlack(() => { showScreen('game-screen'); fadeFromBlack(); });
   } else {
     toHome();
@@ -565,6 +572,7 @@ document.getElementById('privacy-back-btn').addEventListener('click', goBackToGa
 //  BACK BUTTON (game screen)
 // ─────────────────────────────────────────────────────────────
 document.getElementById('back-btn').addEventListener('click', () => {
+  setHash('');
   fadeToBlack(() => { showScreen('home-screen'); fadeFromBlack(); });
 });
 
@@ -573,6 +581,37 @@ document.getElementById('back-btn').addEventListener('click', () => {
 // ─────────────────────────────────────────────────────────────
 document.querySelectorAll('.game-tile').forEach(tile => {
   tile.addEventListener('click', () => openGame(tile.dataset.game));
+});
+
+// ─────────────────────────────────────────────────────────────
+//  HASH ROUTING
+// ─────────────────────────────────────────────────────────────
+let _ownNav = false;
+
+function setHash(hash) {
+  _ownNav = true;
+  window.location.hash = hash;
+  setTimeout(() => { _ownNav = false; }, 50);
+}
+
+function handleRoute() {
+  const hash = window.location.hash.slice(1);
+  if (!hash) { showScreen('home-screen'); return; }
+  const [gameId, section] = hash.split('/');
+  if (!GAMES[gameId]) { showScreen('home-screen'); return; }
+  currentGameId = gameId;
+  if (section === 'privacy') {
+    buildPrivacyScreen(gameId, GAMES[gameId]);
+    showScreen('privacy-screen');
+  } else {
+    buildGameScreen(gameId, GAMES[gameId]);
+    showScreen('game-screen');
+  }
+}
+
+window.addEventListener('hashchange', () => {
+  if (_ownNav) return;
+  handleRoute();
 });
 
 // ─────────────────────────────────────────────────────────────
