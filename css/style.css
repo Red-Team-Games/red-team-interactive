@@ -790,15 +790,24 @@ html, body {
 .g-privacy-link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 11px;
+  gap: 8px;
+  font-size: 13px;
   color: var(--dim);
   letter-spacing: 2px;
   text-decoration: none;
-  transition: color 0.2s;
+  transition: color 0.2s, border-color 0.2s, box-shadow 0.2s;
   margin-top: 4px;
+  border: 1px solid var(--red-dim);
+  padding: 8px 18px;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-mono);
 }
-.g-privacy-link:hover { color: var(--red); }
+.g-privacy-link:hover {
+  color: var(--red);
+  border-color: var(--red);
+  box-shadow: 0 0 8px rgba(255,34,34,0.3);
+}
 .g-privacy-link::before { content: '> '; color: var(--red-dim); }
 
 /* ─────────────────────────────────────────────
