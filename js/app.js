@@ -133,7 +133,7 @@ const GAMES = {
         {
           h: '11. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?',
           p: 'If you have questions or comments about this notice, you may contact us at:',
-          contact: { email: 'support@redteam.games', address: '1377 E 1060 N, Orem, UT 84097, United States' },
+          contact: { email: 'support@redteam.games' },
         },
         {
           h: '12. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT?',
@@ -546,8 +546,7 @@ function buildPrivacyScreen(id, g) {
     if (sec.p2) html += `<div class="pp-body" style="margin-top:10px">${sec.p2}</div>`;
     if (sec.contact) {
       html += `<div class="pp-contact-block">`;
-      if (sec.contact.email) html += `EMAIL&nbsp;&nbsp;&nbsp;<a href="mailto:${sec.contact.email}">${sec.contact.email}</a><br>`;
-      if (sec.contact.address) html += `ADDRESS&nbsp;${sec.contact.address}`;
+      if (sec.contact.email) html += `EMAIL&nbsp;&nbsp;&nbsp;<a href="mailto:${sec.contact.email}">${sec.contact.email}</a>`;
       html += `</div>`;
     }
     html += `</div>`;
