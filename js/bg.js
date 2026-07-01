@@ -26,8 +26,8 @@
       const x  = i * FSIZE;
       const y  = drops[i] * FSIZE;
 
-      // Bright white head, dim red trail
-      ctx.fillStyle = Math.random() > 0.94 ? '#ffffff' : '#cc0000';
+      // Bright white head, very dim red trail
+      ctx.fillStyle = Math.random() > 0.97 ? '#888888' : '#3a0000';
       ctx.fillText(ch, x, y);
 
       if (y > H && Math.random() > 0.972) drops[i] = 0;

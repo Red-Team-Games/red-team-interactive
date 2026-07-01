@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INVESTOR PORTAL — RED TEAM INTERACTIVE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #000000;
+      --red:     #ff2222;
+      --red-dim: #7a0000;
+      --white:   #e4e4e4;
+      --dim:     #555555;
+      --font-hud:  'VT323', monospace;
+      --font-mono: 'Share Tech Mono', monospace;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-mono);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    canvas#bg-canvas {
+      position: fixed; inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.28;
+    }
+
+    #scanlines {
+      position: fixed; inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px, transparent 2px,
+        rgba(0,0,0,0.13) 2px, rgba(0,0,0,0.13) 4px
+      );
+    }
+
+    .page {
+      position: relative;
+      z-index: 2;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--red-dim);
+      margin-bottom: 48px;
+      gap: 12px;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      letter-spacing: 2px;
+    }
+    .red { color: var(--red); }
+    .dim { color: var(--dim); }
+    .back-link {
+      color: var(--dim);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 2px;
+      border: 1px solid var(--red-dim);
+      padding: 4px 10px;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .back-link:hover { color: var(--red); border-color: var(--red); }
+
+    /* ── HERO ── */
+    .hero { margin-bottom: 40px; }
+    .hero-title {
+      font-family: var(--font-hud);
+      font-size: clamp(36px, 6vw, 64px);
+      color: var(--red);
+      letter-spacing: 4px;
+      line-height: 1;
+      margin-bottom: 8px;
+      text-shadow: 0 0 30px rgba(255,34,34,0.4);
+    }
+    .hero-sub {
+      font-size: 12px;
+      color: var(--dim);
+      letter-spacing: 3px;
+    }
+
+    .rul {
+      color: var(--red-dim);
+      letter-spacing: 0;
+      font-size: 14px;
+      margin-bottom: 32px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    /* ── RESTRICTED NOTICE ── */
+    .notice {
+      border: 1px solid var(--red-dim);
+      background: rgba(255,34,34,0.04);
+      padding: 12px 16px;
+      font-size: 11px;
+      color: var(--dim);
+      letter-spacing: 2px;
+      margin-bottom: 40px;
+    }
+    .notice span { color: var(--red); }
+
+    /* ── YEAR LABEL ── */
+    .year-label {
+      font-family: var(--font-hud);
+      font-size: 28px;
+      color: var(--dim);
+      letter-spacing: 4px;
+      margin-bottom: 12px;
+    }
+
+    /* ── REPORT LIST ── */
+    .report-list { display: flex; flex-direction: column; gap: 2px; margin-bottom: 40px; }
+
+    .report-entry {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 20px;
+      border: 1px solid var(--red-dim);
+      background: rgba(0,0,0,0.82);
+      text-decoration: none;
+      color: var(--white);
+      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+    }
+    .report-entry:hover {
+      background: rgba(15,0,0,0.92);
+      border-color: var(--red);
+      box-shadow: 0 0 16px rgba(255,34,34,0.15);
+    }
+    .report-entry-left { display: flex; align-items: center; gap: 16px; }
+    .report-date {
+      font-family: var(--font-hud);
+      font-size: 22px;
+      color: var(--red);
+      letter-spacing: 2px;
+      min-width: 110px;
+    }
+    .report-name {
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: var(--white);
+    }
+    .report-tag {
+      font-size: 10px;
+      color: var(--dim);
+      letter-spacing: 2px;
+      border: 1px solid var(--red-dim);
+      padding: 2px 8px;
+    }
+    .report-arrow {
+      font-size: 18px;
+      color: var(--red-dim);
+      transition: color 0.15s;
+    }
+    .report-entry:hover .report-arrow { color: var(--red); }
+
+    /* cursor blink */
+    .cursor { display: inline-block; animation: blink 1s step-end infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  </style>
+</head>
+<body>
+
+  <canvas id="bg-canvas"></canvas>
+  <div id="scanlines"></div>
+
+  <div class="page">
+    <header>
+      <div class="header-left">
+        <span class="red">&gt;</span>
+        <span style="color:var(--dim);">ROOT</span>
+        <span class="dim">&nbsp;/&nbsp;</span>
+        <span style="color:var(--white); letter-spacing:2px;">INVESTOR PORTAL</span>
+        <span class="cursor red" style="color:var(--red);">_</span>
+      </div>
+      <a class="back-link" href="/">&#9664;&nbsp;MAIN SITE</a>
+    </header>
+
+    <div class="hero">
+      <div class="hero-title">INVESTOR PORTAL</div>
+      <div class="hero-sub">// RED TEAM INTERACTIVE &nbsp;&mdash;&nbsp; MONTHLY REPORTS</div>
+    </div>
+
+    <div class="rul">&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;</div>
+
+    <div class="notice">
+      <span>&gt; RESTRICTED ACCESS</span> &nbsp;—&nbsp; THIS PAGE IS INTENDED FOR AUTHORIZED INVESTORS ONLY. DO NOT SHARE OR DISTRIBUTE.
+    </div>
+
+    <div class="year-label">[ 2026 ]</div>
+
+    <div class="report-list">
+
+      <a class="report-entry" href="june-2026.html">
+        <div class="report-entry-left">
+          <div class="report-date">JUN 2026</div>
+          <div>
+            <div class="report-name">JUNE 2026 — INVESTOR UPDATE</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="report-tag">MONTHLY</span>
+          <span class="report-arrow">&#9658;</span>
+        </div>
+      </a>
+
+      <a class="report-entry" href="may-2026.html">
+        <div class="report-entry-left">
+          <div class="report-date">MAY 2026</div>
+          <div>
+            <div class="report-name">MAY 2026 — INVESTOR UPDATE</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="report-tag">MONTHLY</span>
+          <span class="report-arrow">&#9658;</span>
+        </div>
+      </a>
+
+    </div>
+
+    <div style="font-size:11px; color:var(--dim); letter-spacing:2px;">
+      &gt; NEW REPORTS ADDED MONTHLY &nbsp;<span class="cursor" style="color:var(--dim);">_</span>
+    </div>
+  </div>
+
+  <script src="../js/bg.js"></script>
+</body>
+</html>
